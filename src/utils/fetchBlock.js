@@ -4,6 +4,7 @@ const LINK_TOKEN_ADDRESS = "0x514910771AF9Ca656af840dff83E8264EcF986CA";
 
 export async function fetchBlockData(blockNumber) {
   const block = await httpProvider.getBlock(blockNumber);
+  if (!block) return null;
 
   const transfers = await alchemy.core.getAssetTransfers({
     fromBlock: blockNumber,

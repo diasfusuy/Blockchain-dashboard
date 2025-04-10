@@ -1,8 +1,8 @@
 "use client";
-
+import { wsProvider } from "../utils/alchemy.js";
 import { useEffect, useState } from "react";
-import { fetchBlockData } from "../utils/fetchBlock";
-import { httpProvider } from "../utils/alchemy";
+import { fetchBlockData } from "../utils/fetchBlock.js";
+import { httpProvider } from "../utils/alchemy.js";
 
 export default function Page() {
 
@@ -11,18 +11,30 @@ export default function Page() {
   useEffect(() => {
     const loadBlocks = async () => {
       const latest = await httpProvider.getBlockNumber();
-      const blockNumbers = Array.from({ length: 10 }, (_, i) => latest - i);
+      const blockNumbers = Array.from({ length: 10 }, (_, i) => latest - i);     
 
       const blockData = await Promise.all(
         blockNumbers.map((n) => fetchBlockData(n))
       );
-
       setBlocks(blockData);
+
       console.log("🧱 Latest 10 blocks:", blockData);
     };
 
+    const handleNewBlock = async (blockNumber) => {
+      console.log("🧱 New block mined:", blockNumber);
+      const newBlockData = await fetchBlockData(blockNumber);
+      setBlocks(prev => [newBlockData, ...prev.slice(0, 9)]);
+    };
+
     loadBlocks();
+    wsProvider.on("block", handleNewBlock);
+
+    return () => {
+      wsProvider.off("block", handleNewBlock);
+    };
   }, []);
+
 
   return (
     <main className="flex flex-col items-center justify-center min-h-screen p-4">
