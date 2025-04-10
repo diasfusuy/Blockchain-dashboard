@@ -3,10 +3,21 @@ import { wsProvider } from "../utils/alchemy.js";
 import { useEffect, useState } from "react";
 import { fetchBlockData } from "../utils/fetchBlock.js";
 import { httpProvider } from "../utils/alchemy.js";
+import { LineChart, Line, XAxis, YAxis, Tooltip } from "recharts";
 
 export default function Page() {
 
   const[blocks, setBlocks] = useState([]);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  const chartData = [...blocks].reverse().map((block) => ({
+    blockNumber: block.number,
+    erc20Volume: block.erc20Volume,
+  }));
 
   useEffect(() => {
     const loadBlocks = async () => {
@@ -46,6 +57,15 @@ export default function Page() {
           </li>
         ))}
       </ul>
+      {isClient && (
+        <LineChart data={chartData} width={750} height={300} className="mt-6">
+        <XAxis dataKey="blockNumber" />
+        <YAxis tickFormatter={(value) => Intl.NumberFormat('en', { notation: "compact" }).format(value)} />
+        <Tooltip formatter={(value) => Intl.NumberFormat('en').format(value)} />
+        <Line type="monotone" dataKey="erc20Volume" stroke="#8884d8" dot={{ r: 3 }} />
+      </LineChart>
+      )}
     </main>
+    
   );
 }
