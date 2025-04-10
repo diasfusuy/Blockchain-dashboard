@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { fetchBlockData } from "../utils/fetchBlock.js";
 import { httpProvider } from "../utils/alchemy.js";
 import { LineChart, Line, XAxis, YAxis, Tooltip } from "recharts";
+import GasFeeCorrelationChart from "../components/gasFeeCorrelationChart.js";
 
 export default function Page() {
 
@@ -89,6 +90,8 @@ export default function Page() {
                 <Line type="monotone" dataKey="gasRatio" stroke="#8884d8" dot={{ r: 3 }} />
               </LineChart>
         )}
+
+        <GasFeeCorrelationChart data={chartData} />
     </main>
     
   );
