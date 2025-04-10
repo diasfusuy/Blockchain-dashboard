@@ -18,12 +18,17 @@ export async function fetchBlockData(blockNumber) {
     return sum + parseFloat(tx.value || "0");
   }, 0);
 
+  const gasUsed = Number(block.gasUsed);
+  const gasLimit = Number(block.gasLimit);
+  const gasRatio = gasLimit > 0 ? (gasUsed / gasLimit) * 100 : 0;
+
   return {
     number: blockNumber,
     timestamp: block.timestamp,
     baseFeePerGas: block.baseFeePerGas || 0n,
-    gasUsed: block.gasUsed,
-    gasLimit: block.gasLimit,
+    gasUsed,
+    gasLimit,
+    gasRatio,
     erc20Volume: totalVolume,
     };
 }

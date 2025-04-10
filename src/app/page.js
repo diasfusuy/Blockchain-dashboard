@@ -21,6 +21,7 @@ export default function Page() {
     blockNumber: block.number,
     erc20Volume: block.erc20Volume,
     baseFeePerGas: block.baseFeePerGas.toString(),
+    gasRatio: block.gasRatio,
   }));
 
   useEffect(() => {
@@ -77,6 +78,15 @@ export default function Page() {
                 <YAxis tickFormatter={(value) => Intl.NumberFormat('en', { notation: "compact" }).format(value)} />
                 <Tooltip formatter={(value) => Intl.NumberFormat('en').format(value)} />
                 <Line type="monotone" dataKey="baseFeePerGas" stroke="#8884d8" dot={{ r: 3 }} />
+              </LineChart>
+        )}
+
+        {isClient && (
+              <LineChart data={chartData} width={750} height={300} className="mt-6">
+                <XAxis dataKey="blockNumber" />
+                <YAxis tickFormatter={(value) => Intl.NumberFormat('en', { notation: "compact" }).format(value)} />
+                <Tooltip formatter={(value) => Intl.NumberFormat('en').format(value)} />
+                <Line type="monotone" dataKey="gasRatio" stroke="#8884d8" dot={{ r: 3 }} />
               </LineChart>
         )}
     </main>
