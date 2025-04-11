@@ -6,9 +6,9 @@ import {
 export default function GasFeeCorrelationChart({ data }) {
   return (
     <div className="mt-6">
-      <h3 className="text-xl font-semibold text-center text-blue-700 mb-2">Gas Usage vs Base Fee</h3>
+      <h3 className="text-xl font-semibold text-center text-sky-600 mb-2">Gas Usage vs Base Fee</h3>
       
-        <LineChart data={data} width={950} height={400}>
+        <LineChart data={data} width={750} height={400}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis 
           dataKey="blockNumber" 
