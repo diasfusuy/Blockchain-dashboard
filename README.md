@@ -4,3 +4,5 @@
 2. I added a chart which shows the LINK token volume per block over the last 10 blocks.
 
 3. I added a chart which displays the base fee per gas unit for recent blocks. It is useful for estimating gas costs.
+
+4. I added a chart which shows the gas used vs. gas limit ratio to indicate network congestion.
