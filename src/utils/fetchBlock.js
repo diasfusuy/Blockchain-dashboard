@@ -10,7 +10,7 @@ export async function fetchBlockData(blockNumber) {
     fromBlock: blockNumber,
     toBlock: blockNumber,
     category: ["erc20"],
-    contrqctAddresses: [LINK_TOKEN_ADDRESS],
+    contractAddresses: [LINK_TOKEN_ADDRESS],
     withMetadata: false,
   });
 
